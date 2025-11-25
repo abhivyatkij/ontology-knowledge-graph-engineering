@@ -1,0 +1,47 @@
+#Q1 : Find related products (e.g. cluster by packaging size or weight)
+PREFIX ex: <http://example.org/company_ontology.owl#>
+
+SELECT ?product ?height ?width ?depth ?weight ?volume ?weightClass
+WHERE {
+    ?product a ex:ProductID ; 
+    		ex:hasHeight ?height ;
+    		ex:hasWidth ?width ;
+    		ex:hasDepth ?depth ;
+    		ex:hasWeight ?weight .
+    BIND ( ((?height)*(?width)*(?depth)) AS ?volume)
+    BIND (
+    IF(?weight < 5, "Light",
+      IF(?weight < 20, "Medium",
+         "Heavy"
+      )
+    ) AS ?weightClass
+  )
+    
+}
+ORDER BY ?volume ?weight
+
+#Q2 : Find services / products without a product manager
+
+PREFIX ex: <http://example.org/company_ontology.owl#>
+
+SELECT DISTINCT ?product 
+WHERE {
+ 	?product a ex:Product. 
+    FILTER NOT EXISTS {?product ex:hasProductManager ?manager}
+}
+
+#Q3 : Find services / products without responsible department
+
+PREFIX ex: <http://example.org/company_ontology.owl#>
+
+SELECT DISTINCT ?product
+WHERE {
+    ?product a ex:ProductID .
+	?dept a ex:Department
+    FILTER NOT EXISTS {
+            ?dept ex:offersProduct ?product .
+    }
+}
+
+
+#Q4 : Will be updating soon!
