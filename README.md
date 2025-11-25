@@ -8,6 +8,4 @@ Ontology modeling in OWL/RDFS, RDF data design and transformation, Writing and o
 
 Technologies
 
-OWL, RDF, RDFS
-Turtle (TTL)
-SPARQL
+OWL, RDF, RDFS, Turtle (TTL), SPARQL
